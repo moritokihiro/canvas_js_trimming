@@ -1,12 +1,9 @@
 <html>
 <body>
 <p><input type="file" id="upload" accept="image/*"></p>
-<button onclick="load_img('https://lh3.ggpht.com/O0aW5qsyCkR2i7Bu-jUU1b5BWA_NygJ6ui4MgaAvL7gfqvVWqkOBscDaq4pn-vkwByUx=w300')">A</button>
-<button onclick="load_img('https://www.mozilla.org/media/img/logos/firefox/logo-quantum-wordmark-white.bd1944395fb6.png')">B</button>
-<button onclick="load_img('')">C</button><br>
 <input id='scal' type='range' value='' min='10' max='400' oninput="scaling(value)" style='width: 300px;'><br>
 <canvas id='cvs' width='300' height='400'></canvas><br>
-<button onclick='crop_img()'>CROP</button><br>
+<button onclick='crop_img()'>切り取り</button><br>
 <canvas id='out' width='200' height='200'></canvas>
 <p><button id="saveButton">画像を保存</button></p>
 <script>
@@ -40,17 +37,25 @@
     }
 
     
-    function draw_canvas( _x, _y ){     // 画像更新
-        const ctx = cvs.getContext( '2d' )
-        ctx.fillStyle = 'rgb(200, 200, 200)'
-        ctx.fillRect( 0, 0, cw, ch )    // 背景を塗る
-        ctx.drawImage( img,
+    function draw_canvas(_x, _y) {  // 画像更新
+        const ctx = cvs.getContext('2d');
+        ctx.fillStyle = 'rgb(200, 200, 200)';
+        ctx.fillRect(0, 0, cw, ch);  // 背景を塗る
+        ctx.drawImage(img,
             0, 0, img.width, img.height,
-            (cw/2)-_x*v, (ch/2)-_y*v, img.width*v, img.height*v,
-        )
-        ctx.strokeStyle = 'rgba(200, 0, 0, 0.8)'
-        ctx.strokeRect( (cw-ow)/2, (ch-oh)/2, ow, oh ) // 赤い枠
+            (cw / 2) - _x * v, (ch / 2) - _y * v, img.width * v, img.height * v
+        );
+    
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'; 
+        ctx.lineWidth = 5;  // 線の幅を設定
+        ctx.beginPath();
+        const radius = Math.min(ow, oh) / 2;  // 赤い枠の半径を設定
+        const centerX = cw / 2;  // 円の中心X座標
+        const centerY = ch / 2;  // 円の中心Y座標
+        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);  // 円を描く
+        ctx.stroke();
     }
+
     function crop_img(){                // 画像切り取り
         const ctx = out.getContext( '2d' )
         ctx.fillStyle = 'rgb(200, 200, 200)'
@@ -136,3 +141,25 @@
 </script>
 </body>
 </html>
+
+
+<!-- 枠線
+function draw_canvas(_x, _y) {  // 画像更新
+    const ctx = cvs.getContext('2d');
+    ctx.fillStyle = 'rgb(200, 200, 200)';
+    ctx.fillRect(0, 0, cw, ch);  // 背景を塗る
+    ctx.drawImage(img,
+        0, 0, img.width, img.height,
+        (cw / 2) - _x * v, (ch / 2) - _y * v, img.width * v, img.height * v
+    );
+
+    ctx.strokeStyle = 'rgba(200, 0, 0, 0.8)';
+    ctx.lineWidth = 5;  // 線の幅を設定
+    ctx.beginPath();
+    const radius = Math.min(ow, oh) / 2;  // 赤い枠の半径を設定
+    const centerX = cw / 2;  // 円の中心X座標
+    const centerY = ch / 2;  // 円の中心Y座標
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);  // 円を描く
+    ctx.stroke();
+} 
+-->
