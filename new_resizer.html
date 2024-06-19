@@ -30,40 +30,9 @@
         document.getElementById( 'scal' ).value = scl
         scaling( scl )
     }
-
-
-    const fileInput = document.getElementById('upload');
-    // changeイベントで呼び出す関数
-    const handleFileSelect = (e) => {
-    const files = fileInput.files;
-    for (let i = 0; i < files.length; i++) {
-        console.log(files[i])
-        urlmaker(files[i])
-
+    function load_img(imageUrl){  // 画像の読み込み
+        img.src = imageUrl
     }
-    }
-    // ファイル選択時にhandleFileSelectを発火
-    fileInput.addEventListener('change', handleFileSelect);
-
-    function urlmaker(file) {
-        // FileReaderオブジェクトを作成
-        const reader = new FileReader();
-        // ファイルが読み込まれたときに実行する
-        reader.onload = function (e) {
-            const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
-            console.log(imagUrl)
-            load_img(imageUrl);
-            
-        }
-        // いざファイルを読み込む
-        reader.readAsDataURL(file);
-        
-    }
-    function load_img(imageUrl) {  // 画像の読み込み
-        const img = document.createElement("img"); // img要素を作成
-        img.src = imageUrl; // 画像のURLをimg要素にセット
-    }
-
     
     function scaling( _v ) {        // スライダーが変った
         v = parseInt( _v ) * 0.01
@@ -138,8 +107,31 @@
         link.click()
     })
 
-   
-    
+    const fileInput = document.getElementById('upload');
+    // changeイベントで呼び出す関数
+    const handleFileSelect = (e) => {
+    const files = fileInput.files;
+    for (let i = 0; i < files.length; i++) {
+        console.log(files[i])
+        urlmaker(files[i])
+
+    }
+    }
+    // ファイル選択時にhandleFileSelectを発火
+    fileInput.addEventListener('change', handleFileSelect);
+
+    function urlmaker(file) {
+        // FileReaderオブジェクトを作成
+        const reader = new FileReader();
+        // ファイルが読み込まれたときに実行する
+        reader.onload = function (e) {
+            const imageUrl = e.target.result; // 画像のURLはevent.target.resultで呼び出せる
+            console.log(imageUrl)
+            load_img(imageUrl)
+        }
+        // いざファイルを読み込む
+        reader.readAsDataURL(file);
+    }
     
 </script>
 </body>
