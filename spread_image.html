@@ -19,6 +19,12 @@
     <p><button id="saveButton">画像を保存</button></p>
     <canvas id="CANVAS1" width="300" height="300"></canvas>
     <!-- スライダー -->
+    <p>倍率</p>
+    <p><input type="range" id ="range" name="speed" min="1" max="100"></p>
+    <p>x位置</p>
+    <p><input type="range" id ="rangex" name="speed" min="1" max="300"></p>
+    <p>y位置</p>
+    <p><input type="range" id ="rangey" name="speed" min="1" max="300"></p>
 
     <script>
         window.onload = function(){
@@ -30,13 +36,37 @@
                 reader.onload = function(e) {
                     const img = new Image();
                     img.onload = function() {
-                
+                        let range = document.getElementById('range');
+                        range.addEventListener("mousemove",r_parameter);
+                        let rangex = document.getElementById('rangex');
+                        rangex.addEventListener("mousemove",r_parameter);
+                        let rangey = document.getElementById('rangey');
+                        rangey.addEventListener("mousemove",r_parameter);
+                        function r_parameter(){
+                            console.log(range.value);
+                            let r =(range.value)/50;
+                            canvas.width = (img.width)/r;
+                            canvas.height = (img.height)/r;
+                            // 画像をCanvasに描画
+                            var x =rangex.value;
+                            var y =rangey.value;
+                            ctx.drawImage(img, x, y);
+                            
+                            
+                        }
                         img.width = canvas.width;
                         img.height = canvas.height;
                         // 画像をCanvasに描画
-                        ctx.drawImage(img, 10, 10);
+                        var x=150;
+                        var y=150;
+                        ctx.drawImage(img, x, y);
+                        
+                        
+                        
+                    
                     }
                     img.src = e.target.result;
+                    
                 }
                 reader.readAsDataURL(file);
             });
