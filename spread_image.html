@@ -10,10 +10,7 @@
             width: 300px;
             height: 300px;
         }
-        #CANVAS1{
-            border: solid 3px skyblue;
-            border-radius: 50%;
-        }
+        
     </style>
 </head>
 <body>
@@ -22,86 +19,40 @@
     <p><button id="saveButton">画像を保存</button></p>
     <canvas id="CANVAS1" width="300" height="300"></canvas>
     <!-- スライダー -->
-    <p><input type="range" id ="range" name="speed" min="1" max="100"></p>
-
-    <p><input type="range2" id ="range2" name="speed" min="1" max="100"></p>
-    <!-- ファイル挿入 -->
-    <p><input type="file" id="upload2" accept="image/*"></p>
-    
-    <!-- プレビュー -->
-    <img src="" alt="" id="figureImage" style="max-width: 100%">
-
-    
 
     <script>
         window.onload = function(){
             const canvas = document.querySelector("#CANVAS1");
             const ctx = canvas.getContext("2d");
-
             document.querySelector("#upload").addEventListener("change", function(event) {
                 const file = event.target.files[0];
                 const reader = new FileReader();
-
                 reader.onload = function(e) {
                     const img = new Image();
-                
                     img.onload = function() {
-                        let range = document.getElementById('range');
-                        range.addEventListener("mousemove",r_parameter);
-                        function r_parameter(){
-                            console.log(range.value)
-                            let r =(range.value)/50;
-                            canvas.width = (img.width)/r;
-                            canvas.height = (img.height)/r;
-                            // 画像をCanvasに描画
-                            ctx.drawImage(img, 0, 0);
-                        }
+                
                         img.width = canvas.width;
                         img.height = canvas.height;
                         // 画像をCanvasに描画
-                        ctx.drawImage(img, 0, 0);
+                        ctx.drawImage(img, 10, 10);
                     }
                     img.src = e.target.result;
-
-                    
-                
-
-
                 }
                 reader.readAsDataURL(file);
             });
-
             document.querySelector("#saveButton").addEventListener("click", function() {
                 const dataURL = canvas.toDataURL("image/png");
-
+    
                 // ダウンロードリンクを作成
                 const link = document.createElement('a');
                 link.href = dataURL;
                 link.download = 'canvas_image.png';
-
+    
                 // リンクをクリックして画像を保存
                 link.click();
             });
         };
-
-        const upload2 = document.querySelector("#upload2")
-        upload2.addEventListener("change", (event)=>{
-            const [file] = event.target.files
-            figureImage.setAttribute("src", URL.createObjectURL(file))
-            figure.style.display = "block"
-        }
-        )
-
-        figureImage.onpointermove = function(event){
-            if(event.buttons){
-                this.style.left     = this.offsetLeft + event.movementX + 'px'
-                this.style.top      = this.offsetTop  + event.movementY + 'px'
-                this.style.position = 'absolute'
-                this.draggable      = false
-                this.setPointerCapture(event.pointerId)
-            }
-        }
-
+       
     </script>
 </body>
 </html>
