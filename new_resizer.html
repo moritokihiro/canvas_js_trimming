@@ -37,25 +37,17 @@
     }
 
     
-    function draw_canvas(_x, _y) {  // 画像更新
-        const ctx = cvs.getContext('2d');
-        ctx.fillStyle = 'rgb(200, 200, 200)';
-        ctx.fillRect(0, 0, cw, ch);  // 背景を塗る
-        ctx.drawImage(img,
+    function draw_canvas( _x, _y ){     // 画像更新
+        const ctx = cvs.getContext( '2d' )
+        ctx.fillStyle = 'rgb(200, 200, 200)'
+        ctx.fillRect( 0, 0, cw, ch )    // 背景を塗る
+        ctx.drawImage( img,
             0, 0, img.width, img.height,
-            (cw / 2) - _x * v, (ch / 2) - _y * v, img.width * v, img.height * v
-        );
-    
+            (cw/2)-_x*v, (ch/2)-_y*v, img.width*v, img.height*v,
+        )
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)'; 
-        ctx.lineWidth = 5;  // 線の幅を設定
-        ctx.beginPath();
-        const radius = Math.min(ow, oh) / 2;  // 赤い枠の半径を設定
-        const centerX = cw / 2;  // 円の中心X座標
-        const centerY = ch / 2;  // 円の中心Y座標
-        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);  // 円を描く
-        ctx.stroke();
+        ctx.strokeRect( (cw-ow)/2, (ch-oh)/2, ow, oh ) // 赤い枠
     }
-
     function crop_img(){                // 画像切り取り
         const ctx = out.getContext( '2d' )
         ctx.fillStyle = 'rgb(200, 200, 200)'
@@ -141,25 +133,3 @@
 </script>
 </body>
 </html>
-
-
-<!-- 枠線
-function draw_canvas(_x, _y) {  // 画像更新
-    const ctx = cvs.getContext('2d');
-    ctx.fillStyle = 'rgb(200, 200, 200)';
-    ctx.fillRect(0, 0, cw, ch);  // 背景を塗る
-    ctx.drawImage(img,
-        0, 0, img.width, img.height,
-        (cw / 2) - _x * v, (ch / 2) - _y * v, img.width * v, img.height * v
-    );
-
-    ctx.strokeStyle = 'rgba(200, 0, 0, 0.8)';
-    ctx.lineWidth = 5;  // 線の幅を設定
-    ctx.beginPath();
-    const radius = Math.min(ow, oh) / 2;  // 赤い枠の半径を設定
-    const centerX = cw / 2;  // 円の中心X座標
-    const centerY = ch / 2;  // 円の中心Y座標
-    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);  // 円を描く
-    ctx.stroke();
-} 
--->
